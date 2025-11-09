@@ -1,85 +1,153 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> this is my first web site</title>
+    <title>Project Nebula - Status Dashboard</title>
+    <!-- Load Tailwind CSS from CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-    
-        table {
-            width: 90%;
-            border-collapse: collapse;
-            margin: 30px 0;
+        /* Define custom styling for the interactive status glow */
+        @keyframes pulse-ring {
+            0% { transform: scale(0.3); opacity: 0.9; }
+            100% { transform: scale(1.5); opacity: 0; }
         }
-        th, td {
-            border: 5px solid #ccc;
-            padding: 8px;
-            text-align: left;
-        }
-        th {
-            background-color: lightblue;
-        }
-        caption {
-            font-weight: bold;
-            margin-bottom: 20px;
-            font-size: 1.2em;
+        .status-pulse-ring::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 2px solid currentColor;
+            transform: translate(-50%, -50%);
+            animation: pulse-ring 2s infinite cubic-bezier(0.66, 0, 0, 1);
         }
     </style>
 </head>
-<body >
+<body class="bg-gray-900 font-sans min-h-screen flex flex-col items-center justify-center p-4" style="font-family: 'Inter', sans-serif;">
 
-    <caption>Engineering Project Milestones</caption>
-    <table>
-        <thead>
-            <tr>
-                <th>Phase</th>
-                <th>Task</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Status</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Phase 1: Design</td>
-                <td>Concept Development</td>
-                <td>2025-09-01</td>
-                <td>2025-09-15</td>
-                <td>Completed</td>
-            </tr>
-            <tr>
-                <td>Phase 1: Design</td>
-                <td>Detailed Design</td>
-                <td>2025-09-16</td>
-                <td>2025-10-10</td>
-                <td>In Progress</td>
-            </tr>
-            <tr>
-                <td>Phase 2: Prototyping</td>
-                <td>Component Sourcing</td>
-                <td>2025-10-15</td>
-                <td>2025-10-30</td>
-                <td>Pending</td>
-            </tr>
-            <tr>
-                <td>Phase 2: Prototyping</td>
-                <td>Prototype Assembly</td>
-                <td>2025-11-01</td>
-                <td>2025-11-20</td>
-                <td>Pending</td>
-            </tr>
-            <tr>
-                <td>Phase 3: Testing</td>
-                <td>Performance Testing</td>
-                <td>2025-11-25</td>
-                <td>2025-12-10</td>
-                <td>Scheduled</td>
-            </tr>
-        </tbody>
-    </table>
+    <!-- Main Container -->
+    <div class="w-full max-w-4xl bg-gray-800 rounded-xl shadow-2xl p-6 md:p-10 border border-indigo-700/50">
+
+        <!-- Header -->
+        <header class="text-center mb-8">
+            <h1 class="text-5xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-indigo-500 mb-2">
+                Project Nebula
+            </h1>
+            <p class="text-gray-400 text-lg">A Framework for Decentralized Resource Mapping</p>
+        </header>
+
+        <!-- Interactive Status Panel -->
+        <div class="mb-10 text-center">
+            <p class="text-sm uppercase tracking-widest text-gray-500 mb-3">System Status</p>
+            <div id="status-panel" class="inline-flex items-center space-x-3 cursor-pointer p-4 rounded-full transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98]"
+                 onclick="toggleStatus()"
+                 data-status="online">
+                
+                <!-- Status Indicator (The Creative Part) -->
+                <div id="status-indicator" class="relative w-4 h-4 rounded-full bg-green-500 status-pulse-ring text-green-500 transition-colors duration-300">
+                    <!-- The pulse effect is handled by the custom CSS -->
+                </div>
+
+                <!-- Status Text -->
+                <span id="status-text" class="text-2xl font-semibold text-green-400 transition-colors duration-300">
+                    Online and Active
+                </span>
+            </div>
+            <p class="text-xs mt-2 text-gray-600">Click the status panel to simulate a change!</p>
+        </div>
+
+        <!-- Project Overview & Metrics Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+
+            <!-- Feature Card 1 -->
+            <div class="bg-gray-700 p-6 rounded-lg border-t-4 border-cyan-500 shadow-lg hover:shadow-cyan-500/30 transition-shadow">
+                <h3 class="text-xl font-bold text-gray-100 mb-2">High Performance</h3>
+                <p class="text-gray-400">Achieving 99.9% uptime with optimized data pipelines.</p>
+            </div>
+
+            <!-- Feature Card 2 -->
+            <div class="bg-gray-700 p-6 rounded-lg border-t-4 border-indigo-500 shadow-lg hover:shadow-indigo-500/30 transition-shadow">
+                <h3 class="text-xl font-bold text-gray-100 mb-2">Data Resilience</h3>
+                <p class="text-gray-400">Encrypted and distributed across three global regions.</p>
+            </div>
+
+            <!-- Feature Card 3 -->
+            <div class="bg-gray-700 p-6 rounded-lg border-t-4 border-pink-500 shadow-lg hover:shadow-pink-500/30 transition-shadow">
+                <h3 class="text-xl font-bold text-gray-100 mb-2">Open API</h3>
+                <p class="text-gray-400">Full developer access with comprehensive documentation.</p>
+            </div>
+        </div>
+
+        <!-- Call to Action Link -->
+        <div class="text-center">
+            <a href="#" class="inline-block px-8 py-3 bg-indigo-600 text-white font-bold text-lg rounded-full shadow-lg hover:bg-indigo-500 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-indigo-500/50">
+                Explore the Documentation
+            </a>
+        </div>
+
+    </div>
     
-    <a href="https://www.crazygames.com/"> click here to open my websitre </a>
-    
+    <!-- JavaScript for Interactivity -->
+    <script>
+        /**
+         * Toggles the system status between 'online' and 'maintenance',
+         * updating the visual indicators, colors, and text.
+         */
+        function toggleStatus() {
+            const panel = document.getElementById('status-panel');
+            const indicator = document.getElementById('status-indicator');
+            const text = document.getElementById('status-text');
+            let currentStatus = panel.getAttribute('data-status');
+
+            // Define classes for Online state
+            const onlineClasses = {
+                indicator: 'bg-green-500 text-green-500',
+                text: 'text-green-400',
+                label: 'Online and Active'
+            };
+
+            // Define classes for Maintenance state
+            const maintenanceClasses = {
+                indicator: 'bg-amber-500 text-amber-500',
+                text: 'text-amber-400',
+                label: 'Scheduled Maintenance'
+            };
+
+            if (currentStatus === 'online') {
+                // Switch to Maintenance
+                panel.setAttribute('data-status', 'maintenance');
+                
+                // Update indicator colors (remove old, add new)
+                indicator.classList.remove(onlineClasses.indicator);
+                indicator.classList.add(maintenanceClasses.indicator);
+                
+                // Update text colors
+                text.classList.remove(onlineClasses.text);
+                text.classList.add(maintenanceClasses.text);
+                
+                // Update label
+                text.textContent = maintenanceClasses.label;
+
+            } else {
+                // Switch back to Online
+                panel.setAttribute('data-status', 'online');
+                
+                // Update indicator colors
+                indicator.classList.remove(maintenanceClasses.indicator);
+                indicator.classList.add(onlineClasses.indicator);
+                
+                // Update text colors
+                text.classList.remove(maintenanceClasses.text);
+                text.classList.add(onlineClasses.text);
+
+                // Update label
+                text.textContent = onlineClasses.label;
+            }
+        }
+    </script>
+
 </body>
 </html>
